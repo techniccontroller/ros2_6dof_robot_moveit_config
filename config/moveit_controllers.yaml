@@ -26,7 +26,7 @@ moveit_simple_controller_manager:
       - joint_6
   robotiq_2f_urcap_adapter:
     type: GripperCommand
-    action_ns: gripper_cmd
+    action_ns: gripper_command
     default: true
     joints:
       - gripper_joint
