@@ -1,4 +1,4 @@
-"""Run MoveIt with the Pico driver instead of the mock ros2_control hardware."""
+"""Run the Pico driver with state-only and MoveIt planning RViz views."""
 
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
@@ -35,10 +35,13 @@ def generate_launch_description():
                     "serial_port": serial_port,
                     "baudrate": baudrate,
                     "auto_connect": auto_connect,
+                    # Keep the driver's state-only RViz alongside MoveIt RViz.
+                    "launch_rviz": "true",
                     "debug_position_commands": debug_position_commands,
                 },
             ),
-            _include("ros2_6dof_robot_moveit_config", "rsp.launch.py"),
+            # driver.launch.py already starts robot_state_publisher using the
+            # same description URDF, so do not create a duplicate here.
             _include("ros2_6dof_robot_moveit_config", "move_group.launch.py"),
             _include("ros2_6dof_robot_moveit_config", "moveit_rviz.launch.py"),
         ]
